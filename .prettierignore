@@ -1,0 +1,6 @@
+.venv/
+.xmake/
+build/
+xmake/includes/luals/library/
+scratch/
+uv.lock

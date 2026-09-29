@@ -1,0 +1,12 @@
+-- Configuring copies the declarations and plugin to .xmake/luals, where the project's .luarc.json refers to them.
+option("xmake-luals", function()
+    set_showmenu(false)
+    set_description("Install the LuaLS declarations and plugin into .xmake/luals")
+    on_check(function(option)
+        local output = path.join(os.projectdir(), ".xmake", "luals")
+        os.tryrm(output)
+        os.cp(path.join(os.scriptdir(), "library"), path.join(output, "library"))
+        os.cp(path.join(os.scriptdir(), "plugin.lua"), path.join(output, "plugin.lua"))
+        option:enable(true)
+    end)
+end)

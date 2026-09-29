@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+    tags: ["v[0-9]*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: windows-2025
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@45c121f982720f3bdf236c2ac06f126ca211949c
+        with:
+          version: "0.12.13"
+          python-version: "3.11"
+          enable-cache: true
+
+      - uses: xmake-io/github-action-setup-xmake@3a1a5dddfc7fa625d9a698738334bf55655a861a
+        with:
+          xmake-version: "3.1.1"
+          actions-cache-folder: .xmake-install
+
+      - name: Install development dependencies
+        run: uv sync --locked
+
+      - name: Cache pre-commit environments
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/pre-commit
+          key:
+            pre-commit-${{ runner.os }}-py311-${{
+            hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Lint and format
+        run: uv run pre-commit run --all-files --show-diff-on-failure
+
+      - name: Check the generated library
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          xmake lua generator/main.lua
+          git add --intent-to-add xmake/includes/luals/library
+          git diff --exit-code --stat -- xmake/includes/luals/library
+
+      - name: Install the Lua language server
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          $archive = Join-Path $env:RUNNER_TEMP "luals.zip"
+          Invoke-WebRequest https://github.com/LuaLS/lua-language-server/releases/download/3.19.1/lua-language-server-3.19.1-win32-x64.zip -OutFile $archive
+          if ((Get-FileHash $archive -Algorithm SHA256).Hash -ne "FDB9A59108CF62517813C97FA5549B0E16D1EF0688306BAC728B08434DB7E4CD") {
+              throw "Unexpected lua-language-server archive checksum."
+          }
+          $directory = Join-Path $env:RUNNER_TEMP "luals"
+          Expand-Archive $archive -DestinationPath $directory
+          "LUALS=$directory/bin/lua-language-server.exe" >> $env:GITHUB_ENV
+
+      - name: Tests
+        run: uv run pytest --junitxml=build/test-results.xml
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: test-results
+          path: build/test-results.xml

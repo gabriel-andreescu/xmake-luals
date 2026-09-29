@@ -1,0 +1,6 @@
+package("xmake-luals")
+set_kind("addon")
+set_description("Lua language server declarations and plugin for XMake projects")
+set_license("Apache-2.0")
+add_urls("https://github.com/gabriel-andreescu/xmake-luals.git")
+add_versions("0.1.0", "v0.1.0")
