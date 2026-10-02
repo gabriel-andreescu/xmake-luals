@@ -11,8 +11,9 @@
 
 ## Development
 
-Requires [uv](https://docs.astral.sh/uv/),
-[XMake 3.1.1](https://github.com/xmake-io/xmake/releases/tag/v3.1.1) and the
+Requires [uv](https://docs.astral.sh/uv/), the
+[XMake build](https://github.com/gabriel-andreescu/xmake) pinned as
+`XMAKE_COMMIT` in the [CI workflow](.github/workflows/ci.yml) and the
 [Lua language server](https://github.com/LuaLS/lua-language-server). From the
 repository root:
 
@@ -24,7 +25,7 @@ uv run pre-commit install
 ## Regenerate the library
 
 Don't edit `xmake/includes/luals/library/`. Change the generator, then run it
-with XMake 3.1.1:
+with that XMake build:
 
 ```powershell
 xmake lua generator/main.lua

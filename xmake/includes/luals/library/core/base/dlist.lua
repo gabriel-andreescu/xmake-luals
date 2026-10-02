@@ -65,6 +65,7 @@ function dlist.next(self, last) end
 
 ---pop element from the back
 ---@param self? any
+---@return any ...
 function dlist.pop(self) end
 
 ---get the previous element before the given one
@@ -101,6 +102,7 @@ function dlist.ritems(self) end
 
 ---shift element from the front
 ---@param self? any
+---@return any ...
 function dlist.shift(self) end
 
 ---get the list size

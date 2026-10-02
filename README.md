@@ -2,8 +2,9 @@
 
 Declarations and a plugin for the
 [Lua language server](https://github.com/LuaLS/lua-language-server) (LuaLS) in
-XMake projects, generated from
-[XMake 3.1.1](https://github.com/xmake-io/xmake/releases/tag/v3.1.1).
+XMake projects, generated from the
+[XMake build](https://github.com/gabriel-andreescu/xmake) pinned as
+`XMAKE_COMMIT` in the [CI workflow](.github/workflows/ci.yml).
 
 ## Setup
 

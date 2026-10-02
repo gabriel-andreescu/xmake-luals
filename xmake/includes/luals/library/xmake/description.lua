@@ -1068,8 +1068,8 @@ function set_warnings(...) end
 ---the builtin api: set_xmakever()
 ---
 ---Scopes: root.
----@param minver? any
-function set_xmakever(minver) end
+---@param minver_str? any
+function set_xmakever(minver_str) end
 
 ---Starts a `target` scope. Its functions configure it until another scope starts or `target_end()` closes it.
 ---@param name? any

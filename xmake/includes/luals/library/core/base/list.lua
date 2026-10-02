@@ -65,6 +65,7 @@ function list.next(self, last) end
 
 ---pop element from the back
 ---@param self? any
+---@return any ...
 function list.pop(self) end
 
 ---get the previous element before the given one
@@ -101,6 +102,7 @@ function list.ritems(self) end
 
 ---shift element from the front
 ---@param self? any
+---@return any ...
 function list.shift(self) end
 
 ---get the list size
