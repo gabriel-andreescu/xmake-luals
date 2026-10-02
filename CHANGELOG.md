@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-02
+
 ### Changed
 
 - Declarations are generated from `gabriel-andreescu/xmake` at a pinned commit

@@ -12,7 +12,7 @@ Add the addon to the project's `xmake.lua`:
 
 ```lua
 add_repositories("xmake-luals https://github.com/gabriel-andreescu/xmake-luals.git")
-add_addons("xmake-luals 0.1.0")
+add_addons("xmake-luals 0.1.1")
 includes("@addon/xmake-luals/luals")
 ```
 
