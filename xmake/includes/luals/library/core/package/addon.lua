@@ -4,6 +4,11 @@
 ---@class xmake.module.core.package.addon
 local addon = {}
 
+---activate the given installed version of an addon
+---@param name? any
+---@param version? any
+function addon.activate(name, version) end
+
 ---get all installed addons, only the active version of each addon
 ---@param opt? any
 ---@return any ...
